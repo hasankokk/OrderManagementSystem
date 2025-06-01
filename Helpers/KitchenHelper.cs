@@ -64,7 +64,7 @@ public class KitchenHelper
             return;
         }
 
-        var orderOptions = orders.Select(o => $"#{o.OrderId} | {o.User.Name} {o.User.Surname} | {o.Status}").ToArray();
+        var orderOptions = orders.Select(o => $"{o.User.Name} {o.User.Surname} | {o.Status}").ToArray();
         var selectedIndex = Helper.AskOption(orderOptions, "Hangi siparişin durumunu güncellemek istersiniz");
         var selectedOrder = orders[selectedIndex - 1];
 

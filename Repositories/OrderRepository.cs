@@ -30,7 +30,7 @@ public class OrderRepository
             .Include(o => o.OrderDetails)
                 .ThenInclude(o => o.Product)
             .Include(x => x.User)
-            .Where(x => x.Status == OrderStatus.Alındı || x.Status == OrderStatus.Hazırlanıyor)
+            .Where(x => x.Status != OrderStatus.TeslimEdildi)
             .OrderBy(o => o.Created)
             .ToList();
     }
