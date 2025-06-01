@@ -174,7 +174,7 @@ dotnet run
 
 ## 🔗 Bağlantılar
 
-* LinkedIn: [linkedin.com/in/hasankokk](https://linkedin.com/in/hasankokk)
+* LinkedIn: [linkedin.com/in/hasankok/](linkedin.com/in/hasankok)
 
 ---
 
