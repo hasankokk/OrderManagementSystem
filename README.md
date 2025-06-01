@@ -171,13 +171,6 @@ dotnet run
 
 ---
 
-
-## 🔗 Bağlantılar
-
-* LinkedIn: [linkedin.com/in/hasankok/](linkedin.com/in/hasankok)
-
----
-
 ## 📁 Export Klasörü
 
 Tüm CSV raporlar, çalıştırma dizininde `ExportCsvFiles` klasörüne kaydedilir:
