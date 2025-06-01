@@ -161,7 +161,7 @@ AnsiConsole.Write(table);
 ## 🔧 Kurulum ve Çalıştırma
 
 ```bash
-git clone https://github.com/kullaniciadi/OrderManagementSystem.git
+git clone https://github.com/hasankokk/OrderManagementSystem.git
 cd OrderManagementSystem
 dotnet restore
 dotnet run
