@@ -104,31 +104,49 @@ public class OrderHelper
 
     private void DeleteToShoppingCart(List<ShoppingCart> shoppingCart)
     {
+        if (!shoppingCart.Any())
+        {
+            ColoredHelper.Warning("Sepetinizde ürün yok.");
+            return;
+        }
+
         DrawProductTable(shoppingCart);
 
-        var name = Helper.Ask("Sepetten Çıkarılacak Ürün Adı Girin", true).ToLower();
-        if (name != shoppingCart.FirstOrDefault().Product.ProductName.ToLower())
+        var name = Helper.Ask("Sepetten çıkarılacak ürün adı", true).ToLower();
+
+        var selectOrder = shoppingCart.FirstOrDefault(x =>
+            x.Product.ProductName.ToLower() == name);
+
+        if (selectOrder == null)
         {
             ColoredHelper.Warning("Sepetinizde eşleşen bir ürün bulunamadı.");
             return;
         }
-        var selectOrder =  shoppingCart.FirstOrDefault(x => x.Product.ProductName.ToLower() == name.ToLower());
+
         shoppingCart.Remove(selectOrder);
         ColoredHelper.Success("Ürün başarıyla silindi!");
     }
+
 
     private void UpdateQuantityToShoppingCart(List<ShoppingCart> shoppingCart, List<Product> products)
     {
         DrawProductTable(shoppingCart);
         
         var name = Helper.Ask("Güncellemek İstediğiniz Ürün Adı Girin", true).ToLower();
-        if (name != shoppingCart.FirstOrDefault().Product.ProductName.ToLower())
+        var selectOrder = shoppingCart.FirstOrDefault(x => x.Product.ProductName.ToLower() == name);
+        if (selectOrder == null)
         {
             ColoredHelper.Warning("Sepetinizde eşleşen bir ürün bulunamadı.");
             return;
         }
-        var selectOrder = shoppingCart.FirstOrDefault(x => x.Product.ProductName.ToLower() == name.ToLower());
         var inputQuantity = Helper.AskNumber("Kaç adet eklenecek? (negatif değerle azaltabilirsin)");
+        var dbProduct = _context.Products.FirstOrDefault(p => p.ProductId == selectOrder.Product.ProductId);
+        if (dbProduct != null && selectOrder.Quantity + inputQuantity > dbProduct.Stock)
+        {
+            ColoredHelper.Warning("Güncellenmiş miktar stoktan fazla olamaz.");
+            return;
+        }
+
         selectOrder.Quantity += inputQuantity;
         ColoredHelper.Success("Ürün adeti başarıyla güncellendi!");
     }
@@ -175,6 +193,7 @@ public class OrderHelper
 
             ColoredHelper.Success($"Sayın {loggedUser.Name} {loggedUser.Surname}, siparişiniz " +
                                   $"\n{order.Created} tarihinde işleme alınmıştır.");
+            shoppingCart.Clear();
             return;
         }
 
@@ -182,7 +201,7 @@ public class OrderHelper
     }
     public void ShowOrderHistory(User user)
     {
-        var orders = _orderRepository.GetOrdersByCustomer(user.Id);
+        var orders = _orderRepository.GetOrdersByCustomer(user.UserId);
 
         if (!orders.Any())
         {

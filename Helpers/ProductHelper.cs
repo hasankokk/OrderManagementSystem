@@ -114,7 +114,7 @@ public class ProductHelper
     {
         var table = new Table().RoundedBorder();
         table.AddColumn("[blue]Ürün Adı[/]");
-        table.AddColumn("[green]Fiyat (₺)[/]");
+        table.AddColumn("[green]Fiyat[/]");
         table.AddColumn("[yellow]Stok[/]");
 
         foreach (var product in products)

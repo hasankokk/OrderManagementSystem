@@ -11,14 +11,14 @@ public class UserHelper
     private readonly AppDbContext _context;
     private readonly UserRepository _userRepository;
     private readonly OrderHelper _orderHelper;
-    private readonly Auth _auth;
+    //private readonly Auth _auth;
 
     public UserHelper(AppDbContext context)
     {
         _context = context;
         _userRepository = new UserRepository(_context);
         _orderHelper = new OrderHelper(_context);
-        _auth = new Auth(_userRepository);
+        //_auth = new Auth(_userRepository);
     }
 
     public void Show(User user)
@@ -30,7 +30,7 @@ public class UserHelper
             .AddOption("Şifre Değiştir", () => ChangePassword(user))
             .Show(isRoot: true);
     }
-    private void ShowUserInfo(User user)
+    public void ShowUserInfo(User user)
     {
         AnsiConsole.MarkupLine("[bold underline green]\nKullanıcı Bilgileri[/]");
 
@@ -51,6 +51,11 @@ public class UserHelper
         ColoredHelper.Title("Şifre Değiştirme");
 
         var currentPassword = Helper.AskPassword("Mevcut şifrenizi girin");
+        if (!Validation.IsValidPassword(currentPassword, out var error))
+        {
+            ColoredHelper.Error(error);
+            return;
+        }
         if (!PasswordHash.VerifyPassword(currentPassword, user.Password))
         {
             ColoredHelper.Error("Hatalı şifre!");

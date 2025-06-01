@@ -28,7 +28,7 @@ public class MenuRouter
                 break;
             case Role.Mutfak:
                 ColoredHelper.Success($"Hoş geldiniz, {user.Name} ({user.Role})");
-                _kitchenHelper.Show();
+                _kitchenHelper.Show(user);
                 break;
 
             case Role.Kullanıcı:

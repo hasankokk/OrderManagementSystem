@@ -6,7 +6,7 @@ namespace OrderManagementSystem.Models;
 [Index(nameof(Email), IsUnique = true)]
 public class User
 {
-    public int Id { get; set; }
+    public int UserId { get; set; }
     [Required, MaxLength(50)] 
     public string Name { get; set; } = "";
     [Required, MaxLength(50)] 
@@ -16,4 +16,5 @@ public class User
     [Required] 
     public string Password { get; set; } = "";
     public Role Role { get; set; } = Role.Kullanıcı;
+    
 }
